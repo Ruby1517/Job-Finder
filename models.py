@@ -60,4 +60,13 @@ class Job(db.Model):
     created = db.Column(db.DateTime, nullable=False, default=datetime.today().isoformat())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'company': self.company,
+            'location': self.location,
+            'description': self.description,
+            'created': self.created
+        }
     user = db.relationship('User')

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    
+    <form method="POST" action="api/search-job" id="search-form">
+        {{ form.hidden_tag() }}
+         
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+          <span class="text-danger">{{ error }}</span> 
+          {% endfor %}
+          {{ field(placeholder=field.label.text, class="form-control") }}                  
+        {% endfor %}     
+              
+        <button type="submit" class="btn btn-primary mb-2">Find Job</button>
+    </form>   
+
+    <div class="result"> 
+      {% for result in results %} 
+      <div class="card mt-2">
+        <div class="card-body">
+        <h4 class="card-title"><a href="{{ result.redirect_url }}" style="text-decoration: none; color: blueviolet;" target="_blank">{{ result.title }}</a></h4>
+        <h5>{{ result.location.display_name }}</h5>
+        <h5>{{ result.company.display_name }}</h5>
+        <p class="card-text">{{ result.description }}</p>
+        <p>{{ result.created }}</p>
+        
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+
+{% endblock %}

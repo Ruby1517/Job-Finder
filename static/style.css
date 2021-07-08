@@ -32,8 +32,8 @@ body.error-404 {
 }
 
 .navbar a {
-  color: #66757f;
-  font-size: 13px;
+  color: #44222b;
+  font-size: 15px;
   font-weight: bold;
 }
 
@@ -75,22 +75,12 @@ ul.nav.navbar-nav li {
   margin:20px;
   width: 50%;
   height: 50px;
-  font-size: 13px;
+  font-size: 15px;
   padding-right: 28px;
   box-sizing: border-box;
 }
 
-#search.form-control {
-  display: flex;
-  position: relative;
-  border-radius: 20px;
-  margin:20px;
-  width: 30%;
-  height: 50px;
-  font-size: 13px;
-  padding-right: 28px;
-  box-sizing: border-box;
-}
+
 .btn {
   margin: 20px;
 }
@@ -101,7 +91,15 @@ ul.nav.navbar-nav li {
   border: 2px solid #007bff;
 }
 
-
+.loading-element {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  display: none; 
+}
+.loading {
+  display: block;
+}
 
 /* on "onboarding" pages (signup & login), the navbar is
    different: no search box, the logo is centered, and it has
@@ -387,4 +385,9 @@ nav + .container {
 #search:focus {
   box-shadow: none;
   border: 2px solid #007bff;
+}
+
+.card {
+  
+  border: 1px solid blueviolet;
 }

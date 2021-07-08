@@ -1,23 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-
-
+  <div class="home-hero">
+    <h1>Welcome to job search App</h1>
+    <h4>Sign up now to get your dream job!</h4>
     
-    <form method="POST" id="search-form">
-        {{ form.hidden_tag() }}
-         
-        {% for field in form if field.widget.input_type != 'hidden' %}
-          {% for error in field.errors %}
-          <span class="text-danger">{{ error }}</span> 
-          {% endfor %}
-          {{ field(placeholder=field.label.text, class="form-control") }}                  
-        {% endfor %}     
-              
-        <button type="submit" class="btn btn-primary mb-2">Find Job</button>
-    </form>   
-
-    <div class="result">
-    </div>
-
-
+    <a href="/signup" class="btn btn-primary mt-5">Sign up</a>
+  </div>
 {% endblock %}

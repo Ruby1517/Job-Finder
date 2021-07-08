@@ -14,7 +14,7 @@
   <link rel="stylesheet"
         href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="shortcut icon" href="/static/favicon.ico">
+  
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -35,7 +35,7 @@
         <a href="/">Search Job</a>
       </li>
       <li>
-        <a href="/users/create-job"> Post new Job</a>
+        <a href="/api/create-job"> Post new Job</a>
       </li>
       <li>
         <a href="/users">
@@ -62,5 +62,6 @@
 
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
 <script src="/static/jobSearch.js"></script>
+
 
 </html>
