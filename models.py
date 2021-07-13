@@ -19,7 +19,7 @@ class User(db.Model):
     username = db.Column(db.String(30), nullable=False, unique=True)    
     email = db.Column(db.Text, nullable=False, unique=True)
     password = db.Column(db.Text, nullable=False)
-    job = db.relationship('Job')
+    jobs = db.relationship("Job", backref="user", cascade="all, delete-orphan")
 
     @classmethod
     def signup(cls, username, email, password):
@@ -57,7 +57,7 @@ class Job(db.Model):
     company = db.Column(db.Text, nullable=False)
     location = db.Column(db.Text, nullable=False)   
     description = db.Column(db.Text)
-    created = db.Column(db.DateTime, nullable=False, default=datetime.today().isoformat())
+    created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def serialize(self):
@@ -69,4 +69,4 @@ class Job(db.Model):
             'description': self.description,
             'created': self.created
         }
-    user = db.relationship('User')
+    

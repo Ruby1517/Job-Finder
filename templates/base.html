@@ -15,6 +15,7 @@
         href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" href="/static/style.css">
   
+  
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -35,16 +36,19 @@
         <a href="/">Search Job</a>
       </li>
       <li>
-        <a href="/api/create-job"> Post new Job</a>
+        <a href="/users/{{g.user.id}}/jobs/add"> Post new Job</a>
       </li>
       <li>
-        <a href="/users">
+        <a href="/jobs"> Show Posted Jobs</a>
+      </li>
+      <li>
+        <a href="/users/{{g.user.id}}">
             {{ g.user.username }}
         </a>
       </li>
       
       
-      <li><a href="/logout">Log out</a></li>
+      <li><a href="/logout" >Log out</a></li>
       {% endif %}
     </ul>
   </div>
@@ -61,7 +65,5 @@
 </body>
 
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
-<script src="/static/jobSearch.js"></script>
-
 
 </html>

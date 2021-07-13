@@ -20,7 +20,7 @@
       {% for result in results %} 
       <div class="card mt-2">
         <div class="card-body">
-        <h4 class="card-title"><a href="{{ result.redirect_url }}" style="text-decoration: none; color: blueviolet;" target="_blank">{{ result.title }}</a></h4>
+        <h4 class="card-title"><a href="{{ result.redirect_url }}" id="remove-tag" style="color: blueviolet;" target="_blank"> {{ result.title }}</a></h4>
         <h5>{{ result.location.display_name }}</h5>
         <h5>{{ result.company.display_name }}</h5>
         <p class="card-text">{{ result.description }}</p>

@@ -54,11 +54,6 @@ body.error-404 {
   border-radius: 2px;
 }
 
-.nav > li > a > img {
-  width: 32px;
-  border-radius: 32px;
-}
-
 ul.nav.navbar-nav {
   align-items: center;
 }
@@ -101,44 +96,6 @@ ul.nav.navbar-nav li {
   display: block;
 }
 
-/* on "onboarding" pages (signup & login), the navbar is
-   different: no search box, the logo is centered, and it has
-   a background color.
- */
-
-.onboarding > .navbar {
-  background-image: url("/static/images/nav-bg.png");
-  background-size: 100% 100%;
-}
-
-.onboarding .navbar-header {
-  margin: 0 auto;
-}
-
-.onboarding .navbar-brand {
-  margin: 0;
-}
-
-.onboarding .navbar-brand span {
-  display: none;
-}
-
-.onboarding .nav.navbar-nav.navbar-right {
-  position: absolute;
-  right: 16px;
-}
-
-.onboarding > .navbar a {
-  color: #fff;
-}
-
-.onboarding > .navbar form.navbar-form {
-  display: none;
-}
-
-.onboarding {
-  background-color: #fff;
-}
 
 @media (max-width: 468px) {
   nav form.navbar-form {
@@ -150,148 +107,9 @@ nav + .container {
   margin-bottom: 1rem;
 }
 
-/* ===================== User profile */
-
-
-#profile-image,
-#profile-avatar {
-  border-radius: 100%;
-  display: block;
-  margin-left: -15px;
+a {
+  text-decoration: none;
 }
-
-#profile-image {
-  margin: 0 auto 15px;
-  width: 100%;
-}
-
-#profile-avatar {
-  width: 200px;
-  height: 200px;
-  border: 5px solid #fff;
-  margin-top: -120px;
-  z-index: 1;
-  position: relative;
-  box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
-}
-
-.timeline-image {
-  border-radius: 48px;
-  height: 48px;
-  width: 48px;
-  margin-top: 2px;
-}
-
-.message-area,
-.timeline-image {
-  display: inline-block;
-}
-
-.message-area {
-  margin-left: 10px;
-}
-
-
-
-.full-width {
-  width: 100vw;
-  margin: 0 -50vw;
-  
-  position: relative;
-  left: 50%;
-  right: 50%;
-}
-
-.row.full-width {
-  background-color: #fff;
-  margin-top: -80px;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
-  height: 60px;
-  align-items: center;
-}
-
-.user-stats > .ml-auto {
-  display: flex;
-  align-items: center;
-}
-
-.user-stats > .ml-auto .btn {
-  min-width: 105px;
-  padding: 6px 16px;
-}
-
-.stat {
-  text-align: center;
-  height: 60px;
-  box-sizing: border-box;
-  padding: 14px 15px 7px;
-  line-height: 1;
-}
-
-.stat > .small {
-  color: #657786;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  margin-bottom: 0;
-}
-
-.stat > .small + h4 {
-  font-size: 18px;
-  font-weight: bold;
-  padding-top: 3px;
-}
-
-#messages {
-  position: relative;
-}
-
-#messages .message-link {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
-#messages .list-group-item a:not(.message-link) {
-  position: relative;
-  z-index: 2;
-}
-
-#messages .list-group-item {
-  display: flex;
-  align-items: flex-start;
-  padding: 7px 20px 12px;
-}
-
-#messages:not(.no-hover) .list-group-item:hover {
-  background-color: #e6ecf0;
-}
-
-#sidebar-username {
-  margin-top: 30px;
-  font-size: 21px;
-  font-weight: bold;
-  line-height: 28px;
-  word-wrap: break-word;
-}
-
-@media (max-width: 768px) {
-  .full-width .user-stats .stat {
-    display: none;
-  }
-}
-
-.user-location {
-  color: #657786;
-}
-
-
 
 /* ============================ Signed out home */
 
@@ -314,18 +132,30 @@ nav + .container {
   text-shadow: 0 0 8px #66757f;
 }
 
-
-
 .home-hero .btn {
   text-shadow: none;
   position: relative;
   z-index: 2;
-  width: 150px;
+  width: 150px; 
+  height:55px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  justify-items: center;
 }
 
 .home-hero h1 {
   margin-bottom: 4rem;
+  font-weight: bold;
 }
+
+
+.home-hero h4 {
+  font-weight: bold;
+}
+
+
+
 
 .home-hero:before {
   content: "";
@@ -338,56 +168,22 @@ nav + .container {
 }
 
 
-/* ========================== Signup/Login */
+/* ========================== All Forms*/
 
-#user_form input.form-control {
-  font-size: 18px;
-  font-weight: bold;
-  padding: 12px;
-}
-
-/* =========================== Edit Page */
-
-.edit-btn-area {
-  display: flex;
-  justify-content: space-between;
-}
-
-.edit-btn-area > .btn {
-  width: 48%;
-}
-
-
-#search.form-control {
+.form-control {
   border-radius: 20px;
   margin-bottom: 0; 
-  font-size: 13px;
+  font-size: 15px;
   padding-right: 28px;
   box-sizing: border-box;
 }
 
-#search.form-control + .btn-default {
-  position: absolute;
-  right: 9px;
-  top: 2px;
-  bottom: 4px;
-  z-index: 1;
-  padding: 0;
-  color: #66757f;
-}
-
-#search.form-control + .btn-default:active,
-#search.form-control + .btn-default:focus {
+.form-control + .btn-default:active,
+.form-control + .btn-default:focus {
   box-shadow: none;
 }
 
-#search:active,
-#search:focus {
-  box-shadow: none;
-  border: 2px solid #007bff;
-}
 
-.card {
-  
+.card {  
   border: 1px solid blueviolet;
 }

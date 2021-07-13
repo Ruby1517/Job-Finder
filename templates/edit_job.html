@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    
+    <form id="search-form">
+        {{ form.hidden_tag() }}
+         
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+          <span class="text-danger">{{ error }}</span> 
+          {% endfor %}
+          {{ field(placeholder=field.label.text, class="form-control") }}                  
+        {% endfor %}     
+              
+        <button class="btn btn-primary"
+          formmethod="GET"
+          formaction="/users/{{ job.user_id }}">Cancel</button>
+        <button class="btn btn-primary"
+          formmethod="GET"
+          formaction="/users/{{ job.user_id }}">Save Update</button>
+        
+    </form>   
+
+    
+
+
+{% endblock %}
