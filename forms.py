@@ -33,8 +33,3 @@ class CreateJobForm(FlaskForm):
     location = StringField('Location', validators=[DataRequired()]) 
     description = TextAreaField('Description')
  
-class EditJobForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    company = StringField('Company Name', validators=[DataRequired()])
-    location = StringField('Location', validators=[DataRequired()]) 
-    description = TextAreaField('Description')

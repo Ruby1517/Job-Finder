@@ -75,25 +75,25 @@ ul.nav.navbar-nav li {
   box-sizing: border-box;
 }
 
-
+.container {
+  justify-items: center;
+}
+#search-form {
+  margin-top: 50px;
+}
 .btn {
-  margin: 20px;
+  margin-top: 20px;
+  margin-left: 300px;
+}
+
+#loginBtn {
+  margin-left: 105px; 
 }
 
 .form-control:active,
 .form-control:focus {
   box-shadow: none;
   border: 2px solid #007bff;
-}
-
-.loading-element {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-  display: none; 
-}
-.loading {
-  display: block;
 }
 
 
@@ -104,7 +104,7 @@ ul.nav.navbar-nav li {
 }
 
 nav + .container {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 a {
@@ -153,9 +153,6 @@ a {
 .home-hero h4 {
   font-weight: bold;
 }
-
-
-
 
 .home-hero:before {
   content: "";

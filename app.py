@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
-from forms import SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
+from forms import SignUpForm, LoginForm, SearchJobsForm, CreateJobForm
 from urllib.parse import urlencode
 
 app = Flask(__name__)
@@ -63,8 +63,7 @@ def signup():
                 email=form.email.data,
                 password=form.password.data
             )
-            db.session.commit()
-            
+            db.session.commit()            
 
         except IntegrityError:
             flash("Username already taken", 'danger') 
@@ -156,10 +155,7 @@ def get_jobs_list():
 def profile(user_id):
 
     user = User.query.get_or_404(user_id) 
-    jobs = (Job
-            .query
-            .filter(Job.user_id == user_id)
-            .all())
+    jobs = (Job.query.filter(Job.user_id == user_id).all())
     
     return render_template("profile.html", user=user, jobs=jobs)      
 
@@ -197,18 +193,11 @@ def create_job(user_id):
         return redirect(f"/users/{g.user.id}")
    
      
-@app.route("/jobs")
-def show_my_jobs():
-    user = User.query.all()
-    jobs = Job.query.all()
-    return render_template("show_created_jobs.html", jobs=jobs, user=user)
-    
-   
 @app.route("/jobs/<int:job_id>", methods=["GET","POST"])
 def job_update(job_id):   
     
     job = Job.query.get_or_404(job_id)      
-    form = EditJobForm(obj=job)
+    form = CreateJobForm(obj=job)
     if form.validate_on_submit():
         if job.user_id == g.user.id:
             form.title = form.title.data
@@ -216,11 +205,12 @@ def job_update(job_id):
             form.location = form.location.data
             form. description = form.description.data
 
-            db.session.commit()          
+            db.session.add(job)
+            db.session.commit() 
+
             flash(f"Job '{job.title}' Updated.", 'success')
             return redirect("/users/{job.user_id}")
-
-        return redirect('/login')
+        
     return render_template("edit_job.html", job=job, form=form)
     
 @app.route("/jobs/<int:job_id>/delete", methods=["POST"])

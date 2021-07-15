@@ -10,12 +10,15 @@
         {% for result in jobs %} 
         <div class="card mt-3">
           <div class="card-body">          
-          <h4 class="card-title" style="color: blueviolet;"><a href="/jobs/{{result.id}}"> {{ result.title }}</a></h4>
+          <h4 class="card-title" style="color: blueviolet;">{{ result.title }}</h4>
           <h5>{{ result.company }}</h5>
           <h5>{{ result.location }}</h5>
           <p class="card-text">{{ result.description }}</p>
           <p><h6>created by: {{user.username}}</h6>{{ result.created }}</p>
-        <form>    
+        <form> 
+          <button class="btn btn-primary"
+          formmethod="GET"
+          formaction="/jobs/{{result.id}}">Edit Job</button> 
           <button class="btn btn-danger"
             formmethod="POST"
             formaction="/jobs/{{result.id}}/delete">Delete</button>
