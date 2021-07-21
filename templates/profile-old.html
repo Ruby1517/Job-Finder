@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="col-sm-10 col-12">
+  <h1>Username: {{user.username}}</h1>
+  <p>First Name: {{user.first_name}}</p>
+  <p>Last Name: {{user.last_name}}</p>
+
+  <h6>{{user.email}}</h6>
+
+      
+      <div class="result"> 
+        {% for result in jobs %} 
+        <div class="card mt-3">
+          <div class="card-body">          
+          <h4 class="card-title" style="color: blueviolet;">{{ result.title }}</h4>
+          <h5>{{ result.company }}</h5>
+          <h5>{{ result.location }}</h5>
+          <p class="card-text">{{ result.description }}</p>
+          <p><h6>created by: {{user.username}}</h6>{{ result.created }}</p>
+        <form> 
+          <button class="btn btn-primary"
+          formmethod="GET"
+          formaction="/jobs/{{result.id}}">Edit Job</button> 
+          <button class="btn btn-danger"
+            formmethod="POST"
+            formaction="/jobs/{{result.id}}/delete">Delete</button>
+        </form>   
+  
+          
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+
+{% endblock %}

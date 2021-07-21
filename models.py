@@ -6,6 +6,8 @@ from datetime import datetime, date
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 
+DEFAULT_IMG ="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+
 def connect_db(app):
     db.app = app
     db.init_app(app)
@@ -15,20 +17,28 @@ def connect_db(app):
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
+    first_name = db.Column(db.String(30), nullable=False)
+    last_name = db.Column(db.String(30), nullable=False)      
     username = db.Column(db.String(30), nullable=False, unique=True)    
     email = db.Column(db.Text, nullable=False, unique=True)
     password = db.Column(db.Text, nullable=False)
+    profile_img = db.Column(db.Text, default=DEFAULT_IMG)
+    location = db.Column(db.Text)    
     jobs = db.relationship("Job", backref="user", cascade="all, delete-orphan")
 
     @classmethod
-    def signup(cls, username, email, password):
+    def signup(cls, first_name, last_name, username, email, password, profile_img, location):
         hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
 
         user = User(
+            first_name = first_name,
+            last_name = last_name,
             username=username,
             email=email,
-            password = hashed_pwd
+            password=hashed_pwd,
+            profile_img=profile_img,
+            location=location                    
         )
 
         db.session.add(user)
@@ -46,6 +56,10 @@ class User(db.Model):
                 return user
 
         return False
+
+    @classmethod
+    def fullname(cls, first_name, last_name):
+        return f"{first_name} {last_name}"
 
 
 

@@ -1,34 +1,99 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-    <h4> {{ user.username}}</h4>
-    <h5>{{ user.email }}</h5>    
-
-    
-      <div class="result"> 
-        {% for result in jobs %} 
-        <div class="card mt-3">
-          <div class="card-body">          
-          <h4 class="card-title" style="color: blueviolet;">{{ result.title }}</h4>
-          <h5>{{ result.company }}</h5>
-          <h5>{{ result.location }}</h5>
-          <p class="card-text">{{ result.description }}</p>
-          <p><h6>created by: {{user.username}}</h6>{{ result.created }}</p>
-        <form> 
-          <button class="btn btn-primary"
-          formmethod="GET"
-          formaction="/jobs/{{result.id}}">Edit Job</button> 
-          <button class="btn btn-danger"
-            formmethod="POST"
-            formaction="/jobs/{{result.id}}/delete">Delete</button>
-        </form>   
+<div class="container">
+  <div class="main-body">     
+        
   
-          
+        <div class="row gutters-sm">
+          <div class="col-md-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img src="{{user.profile_img}}" alt="Admin" class="rounded-circle" width="150">
+                  <div class="mt-3">
+                    <h4>{{user.username}}</h4>                    
+                    <p class="text-muted font-size-sm">{{user.location}}</p>
+                    <a href="/users/{{g.user.id}}/jobs/add" class="btn btn-primary">Post Job</a>
+                    <a href="/users/{{g.user.id}}/favorites" class="btn btn-primary">Favorite Jobs</a>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-md-8">
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Full Name</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.first_name}} {{ user.last_name }}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Email</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.email }}
+                  </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Location</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.location }}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <a class="btn btn-info" href="/users/{{user.id}}/edit">Edit Profile</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gutters-sm">
+              <div class="col-sm-12 mb-3 result">
+                <h3>Posted Jobs</h3>               
+                  {% for result in jobs %} 
+                  <div class="card mt-3">
+                    <div class="card-body">          
+                    <h4 class="card-title" style="color: blueviolet;">{{ result.title }}</h4>
+                    <h5>{{ result.company }}</h5>
+                    <h5>{{ result.location }}</h5>
+                    <p class="card-text">{{ result.description }}</p>
+                    <p><h6>created by: {{user.username}}</h6>{{ result.created }}</p>
+                  <form> 
+                    <button class="btn btn-primary"
+                    formmethod="GET"
+                    formaction="/jobs/{{result.id}}">Edit Job</button> 
+                    <button class="btn btn-danger"
+                      formmethod="POST"
+                      formaction="/jobs/{{result.id}}/delete">Delete</button>
+                  </form>   
+            
+                    
+                    </div>
+                  </div>
+                  {% endfor %}
+                
+              </div>
+            </div> 
+
           </div>
         </div>
-        {% endfor %}
+
       </div>
-
-
+  </div>
 {% endblock %}

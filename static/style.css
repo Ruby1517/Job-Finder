@@ -8,17 +8,62 @@ body.error-404 {
   background-color: #1da1f2;
 }
 
-.form-control {
-  margin-bottom: 20px;
+.container {
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
 }
 
+.form-control {
+  display: flex;
+  position: relative;
+  border-radius: 20px;
+  margin:20px;
+  width: 50%;
+  height: 50px;
+  font-size: 15px;
+  padding-right: 28px;
+  box-sizing: border-box;  
+}
+
+.form-control:active,
+.form-control:focus {
+  box-shadow: none;
+  border: 2px solid #007bff;
+}
+
+#search-form {
+  margin-top: 50px;
+  justify-content: center;
+
+}
 .btn {
-  border-radius: 50px;
+  margin-top: 20px; 
+  border-radius: 15px;
 }
 
 .btn:hover {
   cursor: pointer;
 }
+
+.card {  
+  border: 1px solid blueviolet;
+}
+
+.favorites, .redirect {  
+  font-weight: bold;  
+}
+
+.favorites { 
+  margin-right: 200px;
+}
+
+.display-3 {
+  color: #44222b;
+  margin-left: 40px;
+ 
+}
+
 
 /* ======================= Nav */
 
@@ -63,38 +108,15 @@ ul.nav.navbar-nav li {
   display: flex;
 }
 
-.form-control {
-  display: flex;
-  position: relative;
-  border-radius: 20px;
-  margin:20px;
-  width: 50%;
-  height: 50px;
-  font-size: 15px;
-  padding-right: 28px;
-  box-sizing: border-box;
-}
-
-.container {
-  justify-items: center;
-}
-#search-form {
-  margin-top: 50px;
-}
-.btn {
-  margin-top: 20px;
-  margin-left: 300px;
+#sign {
+  margin-left: 70px;
 }
 
 #loginBtn {
   margin-left: 105px; 
 }
 
-.form-control:active,
-.form-control:focus {
-  box-shadow: none;
-  border: 2px solid #007bff;
-}
+
 
 
 @media (max-width: 468px) {
@@ -167,20 +189,3 @@ a {
 
 /* ========================== All Forms*/
 
-.form-control {
-  border-radius: 20px;
-  margin-bottom: 0; 
-  font-size: 15px;
-  padding-right: 28px;
-  box-sizing: border-box;
-}
-
-.form-control + .btn-default:active,
-.form-control + .btn-default:focus {
-  box-shadow: none;
-}
-
-
-.card {  
-  border: 1px solid blueviolet;
-}

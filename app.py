@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
-from forms import SignUpForm, LoginForm, SearchJobsForm, CreateJobForm
+from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
 from urllib.parse import urlencode
 
 app = Flask(__name__)
@@ -59,24 +59,25 @@ def signup():
     if form.validate_on_submit():
         try:
             user = User.signup(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
                 username=form.username.data,
                 email=form.email.data,
-                password=form.password.data
+                password=form.password.data,
+                profile_img=form.profile_img.data or User.profile_img.default.arg,
+                location=form.location.data                
             )
             db.session.commit()            
 
         except IntegrityError:
-            flash("Username already taken", 'danger') 
+            flash("Username already taken, please try again", 'danger') 
             return render_template('signup.html', form=form)  
 
         do_login(user)
         return redirect("/")         
 
     else:
-        # reset Form
-        form.username.data = ""
-        form.email.data = ""
-        form.password.data = ""
+        
         return render_template("signup.html", form=form)
 
 
@@ -89,8 +90,10 @@ def login():
         user = User.authenticte(form.username.data,form.password.data)
           
         if user:
-            do_login(user)            
+            do_login(user) 
+            flash(f"Hello, {user.username}!", "success")           
             return redirect("/")
+            
 
         flash("Invalid username/password.", "danger")     
     return render_template('login.html', form=form)   
@@ -126,7 +129,7 @@ def home():
 ################################################################
 ### Using API
 
-@app.route('/api/search-job', methods =["POST", "GET"])
+@app.route('/users/search-job', methods =["GET", "POST"])
 def get_jobs_list():
     
     form = SearchJobsForm()
@@ -145,37 +148,57 @@ def get_jobs_list():
         
         if response.status_code not in range(200, 299):
             return {}
-        results = response.json()['results']       
+        results = response.json()['results'] 
+        print(results)      
         return render_template('search.html', results=results, form=form)
 
-        
+
+@app.route('/users/<int:user_id>/favorites')
+def favorite_jobs(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template("favorites.html", user=user)  
+
+
 
 ########## User's created Jobs  ###########
+
 @app.route('/users/<int:user_id>')
 def profile(user_id):
 
-    user = User.query.get_or_404(user_id) 
+    user = User.query.get_or_404(user_id)    
     jobs = (Job.query.filter(Job.user_id == user_id).all())
     
-    return render_template("profile.html", user=user, jobs=jobs)      
+    return render_template("profile.html", user=user, jobs=jobs)   
 
+@app.route('/users/<int:user_id>/edit')
+def Update_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    form = EditProfileForm(obj=user)
+    return render_template("edit_profile.html", form=form)
+
+    #if form.validate_on_submit():
+    #    if User.authenticte(User.username, form.password.data):
+    #        user.first_name = form.first_name.data
+    #        user.last_name = form.last_name.data
+    #        user.username = form.username.data
+    #        user.email = form.email.data
+    #        user.profile_img = form.profile_img.data
+    #        user.location = form.location.data
+#
+    #        db.session.commit()
+    #        return redirect(f'/users/{user_id}')       
+    #    flash("Invalid Password, please try again", "danger")
+    #return render_template("edit_profile.html", form=form)
 
 ################### Add New Job #################
-@app.route('/users/<int:user_id>/jobs/add')
-def create_job_page(user_id):
 
-    user = User.query.get_or_404(user_id)   
-    form = CreateJobForm(obj=user)
-    return render_template("add_job.html", form=form)     
-
-
-@app.route('/users/<int:user_id>/jobs/add', methods=["POST", "GET"])
+@app.route('/users/<int:user_id>/jobs/add', methods=["GET", "POST"])
 def create_job(user_id):
     if not g.user:
         flash("For add new job you should login", "danger")
         return redirect("/login") 
 
-    user = User.query.get_or_404(g.user.id)    
+    user = User.query.get_or_404(user_id)    
     form = CreateJobForm(obj=user)    
 
     if form.validate_on_submit():
@@ -184,28 +207,29 @@ def create_job(user_id):
         location = form.location.data
         description = form.description.data
 
-        new_job = Job(title=title, company=company, location=location, description=description, user_id=g.user.id)
+        new_job = Job(title=title, company=company, 
+                        location=location, description=description, user_id=g.user.id)
         
         db.session.add(new_job)
         db.session.commit()
         flash(f"Job '{new_job.title}' posted.", 'success')      
        
         return redirect(f"/users/{g.user.id}")
-   
+    return render_template("add_job.html", form=form)  
      
 @app.route("/jobs/<int:job_id>", methods=["GET","POST"])
 def job_update(job_id):   
     
     job = Job.query.get_or_404(job_id)      
-    form = CreateJobForm(obj=job)
+    form = EditJobForm(obj=job)
     if form.validate_on_submit():
         if job.user_id == g.user.id:
-            form.title = form.title.data
-            form.company = form.company.data
-            form.location = form.location.data
-            form. description = form.description.data
+            job.title = form.title.data
+            job.company = form.company.data
+            job.location = form.location.data
+            job. description = form.description.data
 
-            db.session.add(job)
+           
             db.session.commit() 
 
             flash(f"Job '{job.title}' Updated.", 'success')
