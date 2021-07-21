@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h1 class="display-3",>Search desierd job </h1>
+  <h1>Search desierd job </h1>
     
     <form method="POST" action="users/search-job" id="search-form">
         {{ form.hidden_tag() }}
@@ -18,14 +18,14 @@
  
     <div class="result">       
       {% for result in results %} 
-      <div class="card mt-2" style="width: 75rem;">
+      <div class="card mt-4" style="width: 75rem;">
         <div class="card-body">
         <h4 class="card-title">{{ result.title }}</h4>
         <h5 class="card-subtitle mb-2 text-muted">{{ result.location.display_name }}</h5>
         <h5>{{ result.company.display_name }}</h5>
         <p class="card-text">{{ result.description }}</p>        
         <h5>
-          <a data-id="{{result.id}}" href="/users/favorites" class="card-link favorites">Save Favorite Jobs</a>
+          <a data-id="{{result.id}}" href="/users/{{user.id}}/favorites" class="card-link favorites">Save Favorite Jobs</a>
           <a href="{{ result.redirect_url }}" class="redirect" target="_blank">View/Apply</a>          
         </h5>
         <span style="font-size: small;">{{ result.created }}</span>

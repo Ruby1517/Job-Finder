@@ -87,15 +87,15 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.authenticte(form.username.data,form.password.data)
+        user = User.authenticte(form.username.data, form.password.data)
           
         if user:
-            do_login(user) 
-            flash(f"Hello, {user.username}!", "success")           
+            do_login(user)                       
             return redirect("/")
             
 
-        flash("Invalid username/password.", "danger")     
+        flash("Invalid username/password.", "danger")   
+
     return render_template('login.html', form=form)   
 
 
@@ -132,26 +132,35 @@ def home():
 @app.route('/users/search-job', methods =["GET", "POST"])
 def get_jobs_list():
     
-    form = SearchJobsForm()
+    if g.user:
+        user = User.query.get(session[CURR_USER_KEY])
+        form = SearchJobsForm()
 
-    if form.validate_on_submit():
-        title = form.title.data     
-        location = form.location.data
-        country = 'us'            
-        
-        query_params = urlencode({"app_id": APP_ID, "app_key": APP_KEY, "what":title, "where":location })
-        response = requests.get(f"{BASE_URL}/jobs/{country.lower()}/search/1?{query_params}{BASE_PARAMS}")
-            
-         ####### reset form
-        form.title.data = ""
-        form.location.data = ""
-        
-        if response.status_code not in range(200, 299):
-            return {}
-        results = response.json()['results'] 
-        print(results)      
-        return render_template('search.html', results=results, form=form)
+        if form.validate_on_submit():
+            title = form.title.data     
+            location = form.location.data
+            country = 'us'            
 
+            query_params = urlencode({"app_id": APP_ID, "app_key": APP_KEY, "what":title, "where":location })
+            response = requests.get(f"{BASE_URL}/jobs/{country.lower()}/search/1?{query_params}{BASE_PARAMS}")
+
+             ####### reset form
+            form.title.data = ""
+            form.location.data = ""
+
+            if response.status_code not in range(200, 299):
+                return {}
+
+            results = response.json()['results']                  
+            return render_template('search.html', results=results, form=form, user=user)
+
+        return render_template("search.html", form=form) 
+          
+    else:
+        return render_template("home.html") 
+
+
+###### Favorites Page ####
 
 @app.route('/users/<int:user_id>/favorites')
 def favorite_jobs(user_id):
@@ -160,7 +169,7 @@ def favorite_jobs(user_id):
 
 
 
-########## User's created Jobs  ###########
+########## User's created Jobs #############
 
 @app.route('/users/<int:user_id>')
 def profile(user_id):
@@ -170,25 +179,35 @@ def profile(user_id):
     
     return render_template("profile.html", user=user, jobs=jobs)   
 
-@app.route('/users/<int:user_id>/edit')
-def Update_profile(user_id):
-    user = User.query.get_or_404(user_id)
-    form = EditProfileForm(obj=user)
-    return render_template("edit_profile.html", form=form)
 
-    #if form.validate_on_submit():
-    #    if User.authenticte(User.username, form.password.data):
-    #        user.first_name = form.first_name.data
-    #        user.last_name = form.last_name.data
-    #        user.username = form.username.data
-    #        user.email = form.email.data
-    #        user.profile_img = form.profile_img.data
-    #        user.location = form.location.data
-#
-    #        db.session.commit()
-    #        return redirect(f'/users/{user_id}')       
-    #    flash("Invalid Password, please try again", "danger")
-    #return render_template("edit_profile.html", form=form)
+###### Edit user's profile ##################
+@app.route('/users/profile/edit', methods=["GET", "POST"])
+def Update_profile():
+    
+    if not g.user:
+        flash("Access unauthorized, please login to view this page", "danger")
+        return redirect("/login")
+
+    user = User.query.get(session[CURR_USER_KEY])  
+
+    form = EditProfileForm(obj=user)
+    
+    if form.validate_on_submit():
+        if User.authenticte(form.username.data, form.password.data):
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.username = form.username.data
+            user.email = form.email.data
+            user.profile_img = form.profile_img.data
+            user.location = form.location.data
+
+            db.session.commit()
+            return redirect(f'/users/{user.id}') 
+
+        flash("Invalid Password, please try again", "danger")
+
+    return render_template("edit_profile.html", form=form, user_id=user.id)
+
 
 ################### Add New Job #################
 
@@ -216,26 +235,38 @@ def create_job(user_id):
        
         return redirect(f"/users/{g.user.id}")
     return render_template("add_job.html", form=form)  
+
+
+###### Edit job ###########################
      
-@app.route("/jobs/<int:job_id>", methods=["GET","POST"])
+@app.route("/jobs/<int:job_id>/edit", methods=["GET","POST"])
 def job_update(job_id):   
     
+    if not g.user:
+        flash("Access unauthorized, please login to view this page", "danger")
+        return redirect("/login")
+
+    user = User.query.get(session[CURR_USER_KEY])
+
     job = Job.query.get_or_404(job_id)      
     form = EditJobForm(obj=job)
+    
     if form.validate_on_submit():
         if job.user_id == g.user.id:
             job.title = form.title.data
             job.company = form.company.data
             job.location = form.location.data
             job. description = form.description.data
-
            
             db.session.commit() 
 
             flash(f"Job '{job.title}' Updated.", 'success')
-            return redirect("/users/{job.user_id}")
+            return redirect(f"/users/{user.id}")
         
     return render_template("edit_job.html", job=job, form=form)
+
+
+###### Delete job ##################################
     
 @app.route("/jobs/<int:job_id>/delete", methods=["POST"])
 def job_remove(job_id):

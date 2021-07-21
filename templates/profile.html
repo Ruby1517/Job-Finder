@@ -57,7 +57,7 @@
                 <hr>
                 <div class="row">
                   <div class="col-sm-12">
-                    <a class="btn btn-info" href="/users/{{user.id}}/edit">Edit Profile</a>
+                    <a class="btn btn-info" href="/users/profile/edit">Edit Profile</a>                    
                   </div>
                 </div>
               </div>
@@ -76,8 +76,8 @@
                     <p><h6>created by: {{user.username}}</h6>{{ result.created }}</p>
                   <form> 
                     <button class="btn btn-primary"
-                    formmethod="GET"
-                    formaction="/jobs/{{result.id}}">Edit Job</button> 
+                    formmethod="POST"
+                    formaction="/jobs/{{result.id}}/edit">Edit Job</button> 
                     <button class="btn btn-danger"
                       formmethod="POST"
                       formaction="/jobs/{{result.id}}/delete">Delete</button>

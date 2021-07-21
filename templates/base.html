@@ -10,14 +10,20 @@
   <script src="https://unpkg.com/jquery"></script>
   <script src="https://unpkg.com/popper"></script>
   <script src="https://unpkg.com/bootstrap"></script>
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" 
-         crossorigin="anonymous"/>
+  <link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+			integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+			crossorigin="anonymous"
+		/>
          
   <link rel="stylesheet"
         href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  
+       
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/profile.css">
+
   
   
 </head>
@@ -26,7 +32,8 @@
 <nav class="navbar navbar-expand">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="/" class="navbar-brand">       
+      <a href="/" class="navbar-brand"> 
+        <img src="/static/img/job.jpg" alt="logo">      
         <span>JobsSearch</span>
       </a>
     </div>
@@ -43,7 +50,7 @@
         <a href="/users/{{g.user.id}}/jobs/add"> Post new Job</a>
       </li>  
       <li>
-        <a href="//users/{{g.user.id}}/favorites"> Favorite Jobs</a>
+        <a href="/users/{{g.user.id}}/favorites"> Favorite Jobs</a>
       </li>     
       <li>
         <a href="/users/{{g.user.id}}">

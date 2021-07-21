@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+  <h1>Post New Job</h1>
     
     <form method="POST" id="search-form">
         {{ form.hidden_tag() }}
@@ -13,7 +13,7 @@
           {{ field(placeholder=field.label.text, class="form-control") }}                  
         {% endfor %}     
               
-        <button type="submit" class="btn btn-primary" style="margin-left: 300px;">Post New Job</button>
+        <button type="submit" class="btn btn-primary" style="margin-left: 300px;">Post Job</button>
     </form>   
 
     

@@ -18,7 +18,7 @@ $(".favorites").on("click", function(evt) {
     let targetDiv = $(this).closest("div");
     let obj = targetDiv[0];
     let getHtml = obj.innerHTML;
-    let res = getHtml.replace("Save Favorite Jobs", "<button class='btn btn-sm btn-danger'><i class='fas fa-trash-restore'></i></button>");
+    let res = getHtml.replace("Save Favorite Jobs","<button class='btn btn-sm btn-danger'>Delete</button>");
     let keyName = $(this).data("id");
 
     localStorage.setItem(keyName, res);
@@ -35,5 +35,6 @@ for (let i = 0; i < localStorage.length; i++) {
 		if (targetid === localStorage.key(i)) {
 			localStorage.removeItem(targetid);
 		}
+        
 	});
 }

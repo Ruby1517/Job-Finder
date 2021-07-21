@@ -14,6 +14,7 @@ body.error-404 {
   justify-self: center;
 }
 
+/* ========================== All Forms*/
 .form-control {
   display: flex;
   position: relative;
@@ -33,12 +34,12 @@ body.error-404 {
 }
 
 #search-form {
-  margin-top: 50px;
+  margin-top: 20px;
   justify-content: center;
 
 }
 .btn {
-  margin-top: 20px; 
+  margin-top: 15px; 
   border-radius: 15px;
 }
 
@@ -57,6 +58,7 @@ body.error-404 {
 .favorites { 
   margin-right: 200px;
 }
+
 
 .display-3 {
   color: #44222b;
@@ -95,7 +97,7 @@ body.error-404 {
   display: inline-block;
   margin-bottom: 2px;
   margin-right: 5px;
-  width: 20px;
+  width: 50px;
   border-radius: 2px;
 }
 
@@ -187,5 +189,5 @@ a {
 }
 
 
-/* ========================== All Forms*/
+
 

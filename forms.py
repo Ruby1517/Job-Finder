@@ -21,12 +21,12 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[Length(min=6)])  
     
     
-class EditProfileForm():
+class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])    
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    email = StringField('Email', validators=[DataRequired(), Email()])    
     profile_img = StringField("(Optional) Profile Picture")
     location = StringField('Location (city, state)')
    
