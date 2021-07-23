@@ -32,6 +32,7 @@ class JobSearchTestCase(TestCase):
         self.testuser_id = 4680
         self.testuser.id = self.testuser_id       
         db.session.commit() 
+        
 
     def test_starter_page(self):
         """ Ensuring homepage works"""
@@ -59,7 +60,7 @@ class JobSearchTestCase(TestCase):
                 'password':'password'}, follow_redirects=True)             
 
             self.assertEqual(resp.status_code, 200)             
-            self.assertIn('Welcome', resp.get_data(as_text=True))
+            self.assertIn('Log In', resp.get_data(as_text=True))
     
     def test_favorites(self):
         """Make sure user can access Favorites Page."""
@@ -78,22 +79,30 @@ class JobSearchTestCase(TestCase):
         with app.test_client() as client:
             with client.session_transaction() as sess:
                 sess[CURR_USER_KEY] = self.testuser.id 
-                resp = client.get("/users/search")
-                html = resp.get_data(as_text=True)
-                self.assertIn('Search desierd job', html)
 
-    def test_searchpage(self):
-        """ post job title and location for search job after user login"""
+                resp = client.get("/")
+                html = resp.get_data(as_text=True)                            
+                self.assertIn("<h1>Search desierd job</h1>", html)
 
-        with app.test_client() as client:
-            with client.session_transaction() as sess:
-                sess[CURR_USER_KEY] = self.testuser.id 
-                
-                resp = client.post("/users/search", data={
-                                'title': 'software engineer',
-                                'location':'fresno'})                               
 
-                html = resp.get_data(as_text=True)
-                self.assertEqual(resp.status_code, 200)
-                
+    #def test_post_job(self):
+    #    """ post job title and location for search job after user login"""
+#
+    #    with app.test_client() as client:
+    #        with client.session_transaction() as sess:
+    #            sess[CURR_USER_KEY] = self.testuser.id                
+    #           
+    #            resp = client.post(f'/users/{self.testuser.id}/jobs/add', 
+    #                        data = {
+    #                                'title': 'python',
+    #                                'company':'springboard',
+    #                                'location':'fresno',
+    #                                'description':'this job was posted for test',
+    #                                'user_id': self.testuser.id})   
+#
+#
+#
+    #        self.assertEqual(resp.status_code, 302)             
+    #        self.assertIn('Posted Jobs', resp.get_data(as_text=True))
+    #           
                 
