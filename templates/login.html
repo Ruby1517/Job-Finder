@@ -1,26 +1,41 @@
 {% extends 'base.html' %}
 
-{% block body_class %}onboarding{% endblock %}
-
 {% block content %}
 
-  <div class="row justify-content-md-center">
-    <div class="col-md-4 col-lg-5">
-      <h3> Welcom! </h3>
+  <div class="overaly">
+    <form method="POST" id="user-form">
+      <div class="con">
+        <header class="head-form">
+          <h2>Log In</h2>
+          <p>login here using your username and password</p>
 
-      <form method="POST" id="search-form">
-        {{ form.hidden_tag() }}
+        </header> 
+        <br>
+        <div class="field-set"> 
+          {{ form.hidden_tag() }}
 
-        {% for field in form if field.widget.input_type != 'hidden' %}
-          {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
+          {% for field in form if field.widget.input_type != 'hidden' %}
+            {% for error in field.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {{ field(placeholder=field.label.text, class="form-input")}} 
           {% endfor %}
-          {{ field(placeholder=field.label.text, class="form-control")}} 
-        {% endfor %}
 
-        <button class="btn btn-primary btn-lg" id="loginBtn">Log in</button>
-      </form>
-    </div>
+
+          <button class="log-in">Login</button>          
+        </div>  
+      </div>
+    </form>
   </div>
+
+
+
+
+
+
+
+      
+      
+    
 
 {% endblock %}

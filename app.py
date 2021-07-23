@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g, redirect, flash, url_for, session, jsonify, json
+from flask import Flask, request, render_template, g, redirect, flash, session, jsonify, json
 import requests
 from dotenv import load_dotenv
 load_dotenv()
@@ -9,7 +9,7 @@ from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, Create
 from urllib.parse import urlencode
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///jobSearch-app'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "postgresql:///jobSearch-app")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
@@ -23,6 +23,7 @@ BASE_PARAMS = "&results_per_page=20&content-type=application/json"
 
 APP_ID = os.getenv('APP_ID')
 APP_KEY = os.getenv('APP_KEY')
+
 ################################################################################
 ## User signup/login/logout
 
@@ -118,18 +119,20 @@ def home():
     - anon useres
     - logged in
     """
-
+    
     if g.user:       
         form = SearchJobsForm()
         return render_template("search.html", form=form)
 
     else:
-        return render_template("home.html")    
+        return render_template("home.html") 
+   
+    
 
 ################################################################
-### Using API
+### Requests from API
 
-@app.route('/users/search-job', methods =["GET", "POST"])
+@app.route('/users/search', methods =["GET", "POST"])
 def get_jobs_list():
     
     if g.user:
@@ -144,7 +147,7 @@ def get_jobs_list():
             query_params = urlencode({"app_id": APP_ID, "app_key": APP_KEY, "what":title, "where":location })
             response = requests.get(f"{BASE_URL}/jobs/{country.lower()}/search/1?{query_params}{BASE_PARAMS}")
 
-             ####### reset form
+             
             form.title.data = ""
             form.location.data = ""
 
@@ -154,18 +157,18 @@ def get_jobs_list():
             results = response.json()['results']                  
             return render_template('search.html', results=results, form=form, user=user)
 
-        return render_template("search.html", form=form) 
+        
           
-    else:
-        return render_template("home.html") 
-
+    
 
 ###### Favorites Page ####
 
 @app.route('/users/<int:user_id>/favorites')
 def favorite_jobs(user_id):
-    user = User.query.get_or_404(user_id)
-    return render_template("favorites.html", user=user)  
+    if g.user:
+
+        user = User.query.get_or_404(user_id)
+        return render_template("favorites.html", user=user)  
 
 
 
