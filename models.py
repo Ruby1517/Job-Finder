@@ -56,10 +56,7 @@ class User(db.Model):
                 return user
 
         return False
-
-    @classmethod
-    def fullname(cls, first_name, last_name):
-        return f"{first_name} {last_name}"
+     
 
 
 
