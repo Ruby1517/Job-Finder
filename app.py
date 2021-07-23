@@ -17,6 +17,9 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 
 connect_db(app)
 
+db.create_all()
+
+
 ############ API App_key and App_ID ############
 BASE_URL = "https://api.adzuna.com/v1/api"
 BASE_PARAMS = "&results_per_page=20&content-type=application/json"
