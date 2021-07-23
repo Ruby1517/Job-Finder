@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g, redirect, flash, session, jsonify, json
+from flask import Flask, render_template, g, redirect, flash, session
 import requests
 from dotenv import load_dotenv
 load_dotenv()
