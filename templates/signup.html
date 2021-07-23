@@ -3,21 +3,29 @@
 
 {% block content %}
 
-    <h2 class="join-message">Create Account</h2>
-    <form method="POST" id="search-form">
-      {{ form.hidden_tag() }}
+  <div class="overaly">
+    <form method="POST" id="user-form">
+      <div class="con">
+        <header class="head-form">
+          <h2 class="h2-signup" >Create Account</h2>       
 
-      {% for field in form if field.widget.input_type != 'hidden' %}
-        {% for error in field.errors %}
-          <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-        {{ field(placeholder=field.label.text, class="form-control") }}
-      {% endfor %}
+        </header> 
+        <br>
+        <div class="field-set"> 
+          {{ form.hidden_tag() }}
 
-      <button class="btn btn-primary btn-lg" id="loginBtn">Sign up!</button>
+          {% for field in form if field.widget.input_type != 'hidden' %}
+            {% for error in field.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {{ field(placeholder=field.label.text, class="form-input")}} 
+          {% endfor %}
+
+
+          <button class="log-in">Login</button>          
+        </div>  
+      </div>
     </form>
+  </div>
 
-
-{% endblock %}
-
-
+  {% endblock %}  

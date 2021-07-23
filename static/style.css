@@ -83,9 +83,12 @@ header {
 header h2 {
   font-size: 250%;
   font-family: 'Playfair Display', serif;
-  color: #3e403f;
+  color: #3e403f;  
 }
 
+.h2-signup {
+  margin-bottom: -20px;
+}
 header p {letter-spacing: 0.05em;}
 
 
@@ -142,6 +145,10 @@ input:focus {
   margin: 15px; 
   border-radius: 15px;  
 }
+#edit-acc {
+  margin-left: 13%;
+}
+
 
 button:hover {
   cursor: pointer;
@@ -177,9 +184,6 @@ button:hover {
  
 }
 
-#sign {
-  margin-left: 70px;
-}
 
 
 /* ======================= Nav */
