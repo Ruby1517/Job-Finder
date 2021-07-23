@@ -1,8 +1,7 @@
 import os
 from flask import Flask, render_template, g, redirect, flash, session
 import requests
-from dotenv import load_dotenv
-load_dotenv()
+
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
 from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
@@ -13,7 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "postgres
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret")
 
 connect_db(app)
 
