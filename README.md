@@ -44,9 +44,22 @@ $python3 -m test_models.py
 ## API Used
 This App was made using the [Adzuna API](https://api.adzuna.com) , which provided all the jobs
 
+# user Flow
+- First in home page click on Signup button for create a new account. If you create the account successfully you can login with a valid username and password and view the search page.
 
-## Thechnology
+- In the search page insert job title and location on search form to get a list of jobs from API, then you can apply to jobs, also you can save your favorite jobs.
 
+- Click on the username on the navbar, and view the profile page. In this page you can edit the user's profile, post new jobs, view all lists of posted jobs from this user, and view the user's favorite jobs.
+
+- In the Profile page click on the “Post Job” button or click the “Post New Job” menu on the navbar,  the “post new job” page opens. In this page if you enter “Job Title”, “Company Name”, “Location”, “Description” on the form and submit it, a job was created,and back to the profile page.
+
+- In the profile page, section “Posted Jobs” view all lists of posted jobs with current user, also you can edit the job and delete it.
+
+- Click on the “Search Job” menu on the navbar for search desired jobs from API.
+
+- Click on the “Favorite Jobs” menu on the navbar, view all saved jobs, you can apply to your favorite job or delete the job from your favorites list.
+
+## Thechnologies
 - Web/Frontend
   - JavaScript | CSS | HTML
   
@@ -58,7 +71,6 @@ This App was made using the [Adzuna API](https://api.adzuna.com) , which provide
 
 - Backend Libraries/Frameworks
   - Flask | Flask-SQLAlchemy
-
 
 
 ## Database Schema:
