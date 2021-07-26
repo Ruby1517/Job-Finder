@@ -1,8 +1,6 @@
 import os
 from flask import Flask, render_template, g, redirect, flash, session
 import requests
-from dotenv import load_dotenv
-load_dotenv()
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
 from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
@@ -26,9 +24,9 @@ db.create_all()
 
 BASE_URL = "https://api.adzuna.com/v1/api"
 BASE_PARAMS = "&results_per_page=20&content-type=application/json"
+APP_ID = os.environ.get("APP_ID")
+APP_KEY = os.environ.get("APP_KEY")
 
-APP_ID = os.getenv('APP_ID')
-APP_KEY = os.getenv('APP_KEY')
 
 ################################################################################
 ## User signup/login/logout
