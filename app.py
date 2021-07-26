@@ -1,11 +1,13 @@
 import os
 from flask import Flask, render_template, g, redirect, flash, session
 import requests
-
+from dotenv import load_dotenv
+load_dotenv()
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
 from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
 from urllib.parse import urlencode
+from pathlib import Path
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -20,11 +22,12 @@ connect_db(app)
 
 db.create_all()
 
-
 ############ API App_key and App_ID ############
+
 BASE_URL = "https://api.adzuna.com/v1/api"
 BASE_PARAMS = "&results_per_page=20&content-type=application/json"
-
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 APP_ID = os.getenv('APP_ID')
 APP_KEY = os.getenv('APP_KEY')
 
