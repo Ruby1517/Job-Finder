@@ -27,7 +27,6 @@ BASE_PARAMS = "&results_per_page=20&content-type=application/json"
 APP_ID = os.environ.get("APP_ID")
 APP_KEY = os.environ.get("APP_KEY")
 
-
 ################################################################################
 ## User signup/login/logout
 
