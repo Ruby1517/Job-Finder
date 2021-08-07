@@ -42,7 +42,10 @@ $python3 -m test_models.py
 ```
 
 ## API Used
-This App was made using the [Adzuna API](https://api.adzuna.com) , which provided all the jobs
+This App was made using the [Adzuna API](https://api.adzuna.com) , which provided all the jobs.
+
+## Heroku Link 
+[Job Search APP](https://job-seach-app.herokuapp.com/)
 
 # user Flow
 - First in home page click on Signup button for create a new account. If you create the account successfully you can login with a valid username and password and view the search page.
@@ -59,7 +62,7 @@ This App was made using the [Adzuna API](https://api.adzuna.com) , which provide
 
 - Click on the “Favorite Jobs” menu on the navbar, view all saved jobs, you can apply to your favorite job or delete the job from your favorites list.
 
-## Thechnologies
+## Technologies
 - Web/Frontend
   - JavaScript | CSS | HTML
   

@@ -46,7 +46,7 @@ class User(db.Model):
 
 
     @classmethod
-    def authenticte(cls, username, password):
+    def authenticate(cls, username, password):
         
         user = cls.query.filter_by(username=username).first()
 

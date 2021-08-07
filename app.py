@@ -1,9 +1,10 @@
 import os
 from flask import Flask, render_template, g, redirect, flash, session
+from flask.helpers import url_for
 import requests
 from sqlalchemy.exc import IntegrityError
 from models import db, connect_db, User, Job
-from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm, EditJobForm
+from forms import EditProfileForm, SignUpForm, LoginForm, SearchJobsForm, CreateJobForm
 from urllib.parse import urlencode
 from pathlib import Path
 
@@ -23,9 +24,9 @@ db.create_all()
 ############ API App_key and App_ID ############
 
 BASE_URL = "https://api.adzuna.com/v1/api"
-BASE_PARAMS = "&results_per_page=20&content-type=application/json"
 APP_ID = os.environ.get("APP_ID")
 APP_KEY = os.environ.get("APP_KEY")
+country = 'us'     
 
 ################################################################################
 ## User signup/login/logout
@@ -91,7 +92,7 @@ def login():
     
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.authenticte(form.username.data, form.password.data)
+        user = User.authenticate(form.username.data, form.password.data)
           
         if user:
             do_login(user)                       
@@ -144,22 +145,25 @@ def get_jobs_list():
 
         if form.validate_on_submit():
             title = form.title.data     
-            location = form.location.data
-            country = 'us'            
+            location = form.location.data                   
 
             query_params = urlencode({"app_id": APP_ID, "app_key": APP_KEY, "what":title, "where":location })
-            response = requests.get(f"{BASE_URL}/jobs/{country.lower()}/search/1?{query_params}{BASE_PARAMS}")
-
+            response = requests.get(f"{BASE_URL}/jobs/{country}/search/1?{query_params}")
              
             form.title.data = ""
             form.location.data = ""
 
             if response.status_code not in range(200, 299):
-                return {}
+                return response.status_code
 
             results = response.json()['results']                  
-            return render_template('search.html', results=results, form=form, user=user)
+            return render_template('show-jobs.html', results=results, form=form, user=user)
+            
 
+
+
+        else:
+            return url_for(get_jobs_list)
         
           
     
@@ -199,7 +203,7 @@ def Update_profile():
     form = EditProfileForm(obj=user)
     
     if form.validate_on_submit():
-        if User.authenticte(form.username.data, form.password.data):
+        if User.authenticate(form.username.data, form.password.data):
             user.first_name = form.first_name.data
             user.last_name = form.last_name.data
             user.username = form.username.data
@@ -255,7 +259,7 @@ def job_update(job_id):
     user = User.query.get(session[CURR_USER_KEY])
 
     job = Job.query.get_or_404(job_id)      
-    form = EditJobForm(obj=job)
+    form = CreateJobForm(obj=job)
     
     if form.validate_on_submit():
         if job.user_id == g.user.id:

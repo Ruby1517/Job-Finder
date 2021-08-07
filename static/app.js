@@ -25,8 +25,7 @@ $(".favorites").on("click", function(evt) {
 });
 
 // get all storage data with all saved jobs
-for (let i = 0; i < localStorage.length; i++) {
-	 console.log(localStorage.key(i));
+for (let i = 0; i < localStorage.length; i++) {	
 	$(".fav-jobs-list").append(localStorage.getItem(localStorage.key(i)) + "<hr />");
 	$(".btn-danger").on("click", function () {
 		window.location.reload();
@@ -38,3 +37,8 @@ for (let i = 0; i < localStorage.length; i++) {
         
 	});
 }
+
+//$("#find-job").on(click, function(evt) {
+//    evt.preventDefault();
+//     $("#search-form").style.display='none'
+//})
