@@ -26,6 +26,12 @@ body.error-404 {
   background-color: #1da1f2;
 }
 
+.finder {
+  font-family: fantasy;
+  font-size: 25px;  
+  color: crimson;
+}
+
 
 /* ========================== All Forms*/
 .form-control {
